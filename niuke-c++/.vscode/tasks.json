@@ -1,0 +1,25 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "g++.exe",
+      "command": "g++",
+      "args": [
+        "-fexec-charset=GBK",   // 处理mingw中文编码问题
+        "-finput-charset=UTF-8",// 处理mingw中文编码问题
+        
+        "${workspaceFolder}\\${fileBasenameNoExtension}.cpp",
+        "-o",
+        "${workspaceFolder}\\exe\\${fileBasenameNoExtension}.exe",
+      ],
+      "problemMatcher": [
+        "$msCompile"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}
