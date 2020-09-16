@@ -13,58 +13,44 @@ struct TreeNode
 
 TreeNode* createTree(vector<int>& nodeList)
 {
-    if(nodeList[0]==NULL)
-    {   
-        return NULL;
-    }
-    TreeNode* root = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+    if(!nodeList[0]) return NULL;
+    TreeNode *root = (struct TreeNode *)malloc(sizeof(struct TreeNode));
     root->val = nodeList[0];
+    root->left = NULL;
+    root->right = NULL;
     int i = 1;
-    queue<TreeNode*> que;
+    queue<TreeNode *> que;
     que.push(root);
     int len = nodeList.size();
-    while(!que.empty())
+    while(i<len)
     {
-        
         TreeNode *node = que.front();
         que.pop();
-        if(node != NULL)
+        if(node!=NULL)
+        {
+            if(nodeList[i])
             {
-                if(i==len)
-                {
-                    node->left = NULL;
-                    node->right = NULL;
-                    continue;
-                }
-                if(nodeList[i])
-                {
-                    TreeNode* n = (struct TreeNode *)malloc(sizeof(struct TreeNode));
-                    n->val = nodeList[i];
-                    node->left = n;
-                    que.push(node->left);
-                    
-                }else{
-                    node->left = NULL;
-                }
-                i++;
-                if(i==len) 
-                {
-                    node->right = NULL;
-                    continue;
-                }
-                if(nodeList[i])
-                {
-                    TreeNode* n = (struct TreeNode *)malloc(sizeof(struct TreeNode));
-                    n->val = nodeList[i];
-                    node->right = n;
-                    que.push(node->right);
-                }else{
-                    node->right = NULL;
-                }
-                i++;
-                if(i==len) continue;
+                TreeNode *n = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+                n->val = nodeList[i];
+                n->left = NULL;
+                n->right = NULL;
+                node->left = n;
+                que.push(node->left);
             }
-            
+            i++;
+            if(i==len) break;
+            if(nodeList[i])
+            {
+                TreeNode *n = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+                n->val = nodeList[i];
+                n->left = NULL;
+                n->right = NULL;
+                node->right = n;
+                que.push(node->right);
+            }
+            i++;
+            if(i==len) break;
+        }
     }
     return root;
 }

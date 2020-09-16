@@ -12,7 +12,6 @@ struct TreeNode
 
 int main(){
     TreeNode t = TreeNode(5);
-    TreeNode* p;
-    *p = t;
+    TreeNode *p = &t;
     system("pause");
 }

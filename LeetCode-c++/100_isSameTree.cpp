@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<string>
+#include<queue>
 using namespace std;
 
 
@@ -15,6 +16,51 @@ struct TreeNode
     TreeNode(int x, TreeNode *left, TreeNode *right): val(x), left(left), right(right) {}
 };
 
+
+TreeNode* createTree(vector<int>& nodeList)
+{
+    if(!nodeList.size()) return NULL;
+    TreeNode *root = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+    root->val = nodeList[0];
+    root->left = NULL;
+    root->right = NULL;
+    int i = 1;
+    queue<TreeNode *> que;
+    que.push(root);
+    int len = nodeList.size();
+    while(i<len)
+    {
+        TreeNode *node = que.front();
+        que.pop();
+        if(node!=NULL)
+        {
+            if(nodeList[i])
+            {
+                TreeNode *n = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+                n->val = nodeList[i];
+                n->left = NULL;
+                n->right = NULL;
+                node->left = n;
+                que.push(node->left);
+            }
+            i++;
+            if(i==len) break;
+            if(nodeList[i])
+            {
+                TreeNode *n = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+                n->val = nodeList[i];
+                n->left = NULL;
+                n->right = NULL;
+                node->right = n;
+                que.push(node->right);
+            }
+            i++;
+            if(i==len) break;
+        }
+    }
+    return root;
+}
+
 class Solution {
 public:
     bool isSameTree(TreeNode* p, TreeNode* q) {
@@ -24,34 +70,14 @@ public:
     }
 };
 
-TreeNode createTree(int val)
-{
-    if(val!=-1)
-    return TreeNode(val);
-}
 int main()
 {
-    int nodes[100];
-    string node;
-    int index = 0;
-    while (cin>>node)
-    {
-        if(node=="null")
-            nodes[index++] = -1;
-        else
-        {
-            nodes[index++] = stoi(node);
-        }
-        char ch = getchar();
-        if(ch=='\n') break;
-    }
-    
-    for(int i=0; i<index; ++i)
-    {    
-        TreeNode node = TreeNode();
-        node = createTree(nodes[i]);
-    }
-
+    vector<int> nodeList1 = {1,2};
+    vector<int> nodeList2 = {1,NULL, 2};
+    TreeNode * p = createTree(nodeList1);
+    TreeNode * q = createTree(nodeList2);
+    Solution solution = Solution();
+    cout << solution.isSameTree(p, q) << endl;;
     system("pause");
     return 0;
 }
