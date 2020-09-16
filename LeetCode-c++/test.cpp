@@ -2,12 +2,17 @@
 #include<vector>
 using namespace std;
 
+struct TreeNode
+{
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
 int main(){
-    vector<int> vec;
-    vec.push_back(2);
-    vec.push_back(3);
-    int a = 2;
-    char b[5] = "asdc";
-    cout << 2 <<endl;
+    TreeNode t = TreeNode(5);
+    TreeNode* p;
+    *p = t;
     system("pause");
 }
