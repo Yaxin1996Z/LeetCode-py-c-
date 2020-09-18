@@ -41,7 +41,7 @@ class Solution
 int main()
 {
     Solution solution = Solution();
-    vector<int> candidates = {2, 3, 6, 7};
+    vector<int> candidates = {2, 6, 3, 7};
     int target = 7;
     vector<vector<int>> res = solution.combinationSum(candidates, target);
     for(vector<int> x: res){
