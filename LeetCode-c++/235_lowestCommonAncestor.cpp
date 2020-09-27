@@ -1,15 +1,14 @@
-#include<iostream>
 #include<vector>
 #include<queue>
+#include<iostream>
 using namespace std;
 
-struct TreeNode
-{
+struct TreeNode {
     int val;
-    TreeNode* left;
-    TreeNode* right;
-    TreeNode(int x): val(x), left(NULL), right(NULL){}
-};
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ };
 
 TreeNode* createTree(vector<int> nodeList)
 {
@@ -42,39 +41,36 @@ TreeNode* createTree(vector<int> nodeList)
     return root;
 }
 
-class Solution
-{
-    public:
-    vector<int> inorderTraversal(TreeNode* root)
-    {
-        vector<int> res;
-        dfs(root, res);
-        return res;
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(p->val > q->val)
+        {
+            TreeNode* temp = p;
+            p = q;
+            q = temp;
+        }    
+        return dfs(root, p, q);
     }
-    void dfs(TreeNode* root, vector<int>& res)
+    TreeNode* dfs(TreeNode* root, TreeNode* p, TreeNode* q)
     {
-        if(!root)
-            return;
-        dfs(root->left, res);
-        res.push_back(root->val);
-        dfs(root->right, res);
+        if(q->val < root->val)
+            return dfs(root->left, p, q);
+        else if(p->val > root->val)
+            return dfs(root->right, p, q);
+        else
+            return root;
     }
-    
+
 };
 
 int main()
 {
-    vector<int> treelist = {1, NULL, 2, 3};
-    TreeNode* root = createTree(treelist);
+    vector<int> nodeList = {6,2,8,1,4,7,9,NULL,NULL,3,5};
+    TreeNode* root = createTree(nodeList);
     Solution solution = Solution();
-    vector<int> res = solution.inorderTraversal(root);
-
-    cout << '[';
-    for(int x:res)
-    {
-        cout << x <<' ';
-    }
-    cout << ']' << endl;
+    TreeNode* res = solution.lowestCommonAncestor(root, root->left, root->right);
+    cout << res->val << endl;
     system("pause");
     return 0;
 }

@@ -17,46 +17,33 @@ struct TreeNode
 };
 
 
-TreeNode* createTree(vector<int>& nodeList)
+TreeNode* createTree(vector<int> nodeList)
 {
-    if(!nodeList.size()) return NULL;
-    TreeNode *root = (struct TreeNode *)malloc(sizeof(struct TreeNode));
-    root->val = nodeList[0];
-    root->left = NULL;
-    root->right = NULL;
-    int i = 1;
-    queue<TreeNode *> que;
-    que.push(root);
     int len = nodeList.size();
-    while(i<len)
+    if(len==0 || !nodeList[0])
+        return nullptr;
+    TreeNode* root = new TreeNode(nodeList[0]);
+    queue<TreeNode*> que;
+    que.push(root);
+    int i=1;
+    while (i<len)
     {
-        TreeNode *node = que.front();
+        TreeNode* node = que.front();
         que.pop();
-        if(node!=NULL)
+        if(nodeList[i])
         {
-            if(nodeList[i])
-            {
-                TreeNode *n = (struct TreeNode *)malloc(sizeof(struct TreeNode));
-                n->val = nodeList[i];
-                n->left = NULL;
-                n->right = NULL;
-                node->left = n;
-                que.push(node->left);
-            }
-            i++;
-            if(i==len) break;
-            if(nodeList[i])
-            {
-                TreeNode *n = (struct TreeNode *)malloc(sizeof(struct TreeNode));
-                n->val = nodeList[i];
-                n->left = NULL;
-                n->right = NULL;
-                node->right = n;
-                que.push(node->right);
-            }
-            i++;
-            if(i==len) break;
+            TreeNode* n = new TreeNode(nodeList[i]);
+            node->left = n;
+            que.push(n);
         }
+        if(++i==len) break;
+        if(nodeList[i])
+        {
+            TreeNode* n = new TreeNode(nodeList[i]);
+            node->right = n;
+            que.push(n);
+        }
+        if(++i==len) break;
     }
     return root;
 }
